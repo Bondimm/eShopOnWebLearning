@@ -21,15 +21,15 @@ public class CatalogLookupDataService<TLookupData, TReponse>
 
     private readonly HttpClient _httpClient;
     private readonly ILogger<CatalogLookupDataService<TLookupData, TReponse>> _logger;
-    private readonly string _apiUrl;
+    private readonly IApiService _apiService;
 
     public CatalogLookupDataService(HttpClient httpClient,
-        IOptions<BaseUrlConfiguration> baseUrlConfiguration,
+        IApiService apiService,
         ILogger<CatalogLookupDataService<TLookupData, TReponse>> logger)
     {
         _httpClient = httpClient;
         _logger = logger;
-        _apiUrl = baseUrlConfiguration.Value.ApiBase;
+        _apiService = apiService;
     }
 
     public async Task<List<TLookupData>> List()
@@ -37,7 +37,7 @@ public class CatalogLookupDataService<TLookupData, TReponse>
         var endpointName = typeof(TLookupData).GetCustomAttribute<EndpointAttribute>().Name;
         _logger.LogInformation($"Fetching {typeof(TLookupData).Name} from API. Enpoint : {endpointName}");
 
-        var response = await _httpClient.GetFromJsonAsync<TReponse>($"{_apiUrl}{endpointName}");
+        var response = await _httpClient.GetFromJsonAsync<TReponse>($"{await _apiService.GetApiUrlAsync()}{endpointName}");
         return response.List;
     }
 }

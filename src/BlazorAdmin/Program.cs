@@ -5,6 +5,7 @@ using BlazorAdmin;
 using BlazorAdmin.Services;
 using Blazored.LocalStorage;
 using BlazorShared;
+using BlazorShared.Interfaces;
 using BlazorShared.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
@@ -17,13 +18,13 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#admin");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-var configSection = builder.Configuration.GetRequiredSection(BaseUrlConfiguration.CONFIG_NAME);
-builder.Services.Configure<BaseUrlConfiguration>(configSection);
-
 builder.Services.AddScoped(sp => new HttpClient() { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+var appService = new ApiService(builder.HostEnvironment.BaseAddress);
 
 builder.Services.AddScoped<ToastService>();
 builder.Services.AddScoped<HttpService>();
+builder.Services.AddSingleton<IApiService>(x => appService);
 
 builder.Services.AddBlazoredLocalStorage();
 

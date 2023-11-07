@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using BlazorShared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -69,17 +70,7 @@ builder.Services.AddAuthentication(config =>
     };
 });
 
-const string CORS_POLICY = "CorsPolicy";
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: CORS_POLICY,
-        corsPolicyBuilder =>
-        {
-            corsPolicyBuilder.WithOrigins(baseUrlConfig!.WebBase.Replace("host.docker.internal", "localhost").TrimEnd('/'));
-            corsPolicyBuilder.AllowAnyMethod();
-            corsPolicyBuilder.AllowAnyHeader();
-        });
-});
+builder.Services.AddCors();
 
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
@@ -158,7 +149,15 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-app.UseCors(CORS_POLICY);
+app.UseCors(x => x
+    .AllowAnyOrigin()
+    .AllowAnyHeader()
+    .WithMethods(
+        HttpMethod.Get.Method,
+        HttpMethod.Put.Method,
+        HttpMethod.Post.Method,
+        HttpMethod.Delete.Method,
+        HttpMethod.Options.Method));
 
 app.UseAuthorization();
 
