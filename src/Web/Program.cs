@@ -172,13 +172,13 @@ if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docke
     app.Logger.LogInformation("Adding Development middleware...");
     app.UseShowAllServicesMiddleware();
     app.UseMigrationsEndPoint();
+    app.UseDeveloperExceptionPage();
     app.UseWebAssemblyDebugging();
 }
 else
 {
     app.Logger.LogInformation("Adding non-Development middleware...");
     app.UseExceptionHandler("/Error");
-    app.UseDeveloperExceptionPage();
     app.UseHsts();
 }
 
