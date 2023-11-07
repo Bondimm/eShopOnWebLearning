@@ -170,7 +170,6 @@ app.UseHealthChecks("/health",
 if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docker")
 {
     app.Logger.LogInformation("Adding Development middleware...");
-    app.UseDeveloperExceptionPage();
     app.UseShowAllServicesMiddleware();
     app.UseMigrationsEndPoint();
     app.UseWebAssemblyDebugging();
