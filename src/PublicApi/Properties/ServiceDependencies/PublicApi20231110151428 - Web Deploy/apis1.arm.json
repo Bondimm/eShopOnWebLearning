@@ -36,7 +36,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "name": "[concat(parameters('resourceGroupName'), 'Deployment', uniqueString(concat('eShopLearning0711', subscription().subscriptionId)))]",
+      "name": "[concat(parameters('resourceGroupName'), 'Deployment', uniqueString(concat('PublicApi', subscription().subscriptionId)))]",
       "resourceGroup": "[parameters('resourceGroupName')]",
       "apiVersion": "2019-10-01",
       "dependsOn": [
@@ -49,7 +49,7 @@
           "contentVersion": "1.0.0.0",
           "resources": [
             {
-              "name": "eShopLearning0711Mangement",
+              "name": "PublicApi1011",
               "type": "Microsoft.ApiManagement/service",
               "location": "[parameters('resourceLocation')]",
               "properties": {
@@ -59,7 +59,7 @@
                 "hostnameConfigurations": [
                   {
                     "type": "Proxy",
-                    "hostName": "eshoplearning0711mangement.azure-api.net",
+                    "hostName": "publicapi1011.azure-api.net",
                     "encodedCertificate": null,
                     "keyVaultId": null,
                     "certificatePassword": null,
@@ -95,9 +95,9 @@
             },
             {
               "type": "Microsoft.ApiManagement/service/apis",
-              "name": "eShopLearning0711Mangement/eShopLearning0711",
+              "name": "PublicApi1011/PublicApi",
               "properties": {
-                "displayName": "eShopLearning0711",
+                "displayName": "PublicApi",
                 "apiRevision": "1",
                 "description": null,
                 "subscriptionRequired": true,
@@ -118,7 +118,7 @@
               },
               "apiVersion": "2019-12-01",
               "dependsOn": [
-                "eShopLearning0711Mangement"
+                "PublicApi1011"
               ]
             }
           ]

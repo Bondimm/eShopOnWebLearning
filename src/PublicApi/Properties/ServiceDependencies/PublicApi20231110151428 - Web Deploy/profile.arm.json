@@ -21,7 +21,7 @@
     },
     "resourceName": {
       "type": "string",
-      "defaultValue": "eshop-learning-api-0711",
+      "defaultValue": "PublicApi20231110151428",
       "metadata": {
         "description": "Name of the main resource to be created by this template."
       }
