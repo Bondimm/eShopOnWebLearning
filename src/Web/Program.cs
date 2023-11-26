@@ -97,6 +97,10 @@ var configSection = builder.Configuration.GetRequiredSection(BaseUrlConfiguratio
 builder.Services.Configure<BaseUrlConfiguration>(configSection);
 var baseUrlConfig = configSection.Get<BaseUrlConfiguration>();
 
+var configSectionFunction = builder.Configuration.GetRequiredSection(FunctionUrlConfiguration.CONFIG_NAME);
+builder.Services.Configure<FunctionUrlConfiguration>(configSectionFunction);
+var baseUrlConfigFunction = configSectionFunction.Get<FunctionUrlConfiguration>();
+
 // Blazor Admin Required Services for Prerendering
 builder.Services.AddScoped(sp => new HttpClient() { BaseAddress = new Uri(baseUrlConfig!.WebBase) });
 var appService = new ApiService(baseUrlConfig!.WebBase);
