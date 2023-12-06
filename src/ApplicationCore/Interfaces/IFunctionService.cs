@@ -7,4 +7,6 @@ namespace Microsoft.eShopWeb.ApplicationCore.Interfaces;
 public interface IFunctionService
 {
     Task<bool> ReserveOrderItems(IEnumerable<OrderItem> orderItems);
+
+    Task<bool> ReserveOrder(Order order);
 }

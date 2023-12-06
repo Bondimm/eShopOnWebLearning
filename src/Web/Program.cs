@@ -1,6 +1,5 @@
 ﻿using System.Net.Mime;
 using Ardalis.ListStartupServices;
-using Azure.Identity;
 using BlazorAdmin;
 using BlazorAdmin.Services;
 using Blazored.LocalStorage;
@@ -29,15 +28,13 @@ if (builder.Environment.IsDevelopment() || builder.Environment.EnvironmentName =
 }
 else{
     // Configure SQL Server (prod)
-    var credential = new ChainedTokenCredential(new AzureDeveloperCliCredential(), new DefaultAzureCredential());
-    //builder.Configuration.AddAzureKeyVault(new Uri(builder.Configuration["AZURE_KEY_VAULT_ENDPOINT"] ?? ""), credential);
     builder.Services.AddDbContext<CatalogContext>(c =>
     {
-        c.UseSqlServer(builder.Configuration.GetConnectionString("AZURE_SQL_CATALOG_CONNECTION_STRING_KEY"));
+        c.UseSqlServer(builder.Configuration.GetConnectionString("CatalogConnection"));
     });
     builder.Services.AddDbContext<AppIdentityDbContext>(options =>
     {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("AZURE_SQL_IDENTITY_CONNECTION_STRING_KEY"));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection"));
     });
 }
 

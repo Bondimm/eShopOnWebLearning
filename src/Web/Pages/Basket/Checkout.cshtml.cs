@@ -60,7 +60,7 @@ public class CheckoutModel : PageModel
             await _basketService.SetQuantities(BasketModel.Id, updateModel);
             var order = await _orderService.CreateOrderAsync(BasketModel.Id, new Address("123 Main St.", "Kent", "OH", "United States", "44240"));
             await _basketService.DeleteBasketAsync(BasketModel.Id);
-            var orderReservationResult = await _functionService.ReserveOrderItems(order.OrderItems);
+            var orderReservationResult = await _functionService.ReserveOrder(order);
             if (!orderReservationResult)
             {
                 _logger.LogWarning("Order items can't be reserved");

@@ -7,4 +7,5 @@ public class FunctionUrlConfiguration
     public string FunctionKey { get; set; }
     public string BaseUrl { get; set; }
     public string OrderItemsReserverFunction { get; set; }
+    public string DeliveryOrderProcessorFunction { get; set; }
 }

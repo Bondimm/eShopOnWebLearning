@@ -40,6 +40,25 @@ public class FunctionService : IFunctionService
         return result.IsSuccessStatusCode;
     }
 
+    public async Task<bool> ReserveOrder(Order order)
+    {
+        var orderInfo = new 
+        { 
+            Id = order.Id.ToString(), 
+            OrderId = order.Id,
+            order.ShipToAddress,
+            order.OrderItems,
+            FinalPrice = order.Total() 
+        };
+
+        var content = ToJson(orderInfo);
+
+        var result = await _httpClient.PostAsync(
+            $"{_baseFunctionUrlConfiguration.BaseUrl}{_baseFunctionUrlConfiguration.DeliveryOrderProcessorFunction}?code={_baseFunctionUrlConfiguration.FunctionKey}", content);
+
+        return result.IsSuccessStatusCode;
+    }
+
     private static StringContent ToJson(object dataToSend)
     {
         var options = new JsonSerializerOptions
