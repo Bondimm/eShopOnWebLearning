@@ -18,6 +18,7 @@ public class CheckoutModel : PageModel
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly IOrderService _orderService;
     private readonly IFunctionService _functionService;
+    private readonly IQueueService _queueService;
     private string? _username = null;
     private readonly IBasketViewModelService _basketViewModelService;
     private readonly IAppLogger<CheckoutModel> _logger;
@@ -28,12 +29,14 @@ public class CheckoutModel : PageModel
         SignInManager<ApplicationUser> signInManager,
         IOrderService orderService,
         IFunctionService functionService,
+        IQueueService queueService,
         IAppLogger<CheckoutModel> logger)
     {
         _basketService = basketService;
         _signInManager = signInManager;
         _orderService = orderService;
         _functionService = functionService;
+        _queueService = queueService;
         _basketViewModelService = basketViewModelService;
         _logger = logger;
     }
@@ -55,17 +58,12 @@ public class CheckoutModel : PageModel
             {
                 return BadRequest();
             }
-
+ 
             var updateModel = items.ToDictionary(b => b.Id.ToString(), b => b.Quantity);
             await _basketService.SetQuantities(BasketModel.Id, updateModel);
             var order = await _orderService.CreateOrderAsync(BasketModel.Id, new Address("123 Main St.", "Kent", "OH", "United States", "44240"));
             await _basketService.DeleteBasketAsync(BasketModel.Id);
-            var orderReservationResult = await _functionService.ReserveOrder(order);
-            if (!orderReservationResult)
-            {
-                _logger.LogWarning("Order items can't be reserved");
-            }
-
+            await _queueService.ReserveOrderItems(order.OrderItems);
         }
         catch (EmptyBasketOnCheckoutException emptyBasketOnCheckoutException)
         {

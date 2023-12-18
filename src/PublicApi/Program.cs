@@ -54,6 +54,10 @@ var configSectionFunction = builder.Configuration.GetRequiredSection(FunctionUrl
 builder.Services.Configure<FunctionUrlConfiguration>(configSectionFunction);
 var baseUrlConfigFunction = configSectionFunction.Get<FunctionUrlConfiguration>();
 
+var configSectionQueue = builder.Configuration.GetRequiredSection(QueueConfiguration.CONFIG_NAME);
+builder.Services.Configure<QueueConfiguration>(configSectionQueue);
+var baseUrlConfigQueue = configSectionQueue.Get<QueueConfiguration>();
+
 builder.Services.AddMemoryCache();
 
 var key = Encoding.ASCII.GetBytes(AuthorizationConstants.JWT_SECRET_KEY);

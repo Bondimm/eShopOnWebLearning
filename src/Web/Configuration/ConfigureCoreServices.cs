@@ -19,6 +19,7 @@ public static class ConfigureCoreServices
         services.AddScoped<IOrderService, OrderService>();
         services.AddScoped<IBasketQueryService, BasketQueryService>();
         services.AddScoped<IFunctionService, FunctionService>();
+        services.AddScoped<IQueueService, QueueService>();
 
         var catalogSettings = configuration.Get<CatalogSettings>() ?? new CatalogSettings();
         services.AddSingleton<IUriComposer>(new UriComposer(catalogSettings));
