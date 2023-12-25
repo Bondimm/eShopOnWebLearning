@@ -2,19 +2,19 @@ version: '3.4'
 services:
  eshopwebmvc:
    environment:
-     - ASPNETCORE_ENVIRONMENT=Docker
+     - ASPNETCORE_ENVIRONMENT=Production
      - ASPNETCORE_URLS=http://+:80
    ports:
-     - "5106:80"
+     - "8080:80"
    volumes:
      - ~/.aspnet/https:/root/.aspnet/https:ro
      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
  eshoppublicapi:
    environment:
-     - ASPNETCORE_ENVIRONMENT=Docker
+     - ASPNETCORE_ENVIRONMENT=Production
      - ASPNETCORE_URLS=http://+:80
    ports:
-     - "5200:80"
+     - "5300:80"
    volumes:
      - ~/.aspnet/https:/root/.aspnet/https:ro
      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
