@@ -35,7 +35,7 @@ public class FunctionService : IFunctionService
         var content = ToJson(orderInfos);
 
         var result = await _httpClient.PostAsync(
-            $"{_baseFunctionUrlConfiguration.BaseUrl}{_baseFunctionUrlConfiguration.OrderItemsReserverFunction}?code={_baseFunctionUrlConfiguration.FunctionKey}", content);
+            $"{_baseFunctionUrlConfiguration.BaseUrl}{_baseFunctionUrlConfiguration.OrderItemsReserverFunction}?code={_baseFunctionUrlConfiguration.OrderItemsReserverFunctionKey}", content);
 
         return result.IsSuccessStatusCode;
     }
@@ -54,7 +54,7 @@ public class FunctionService : IFunctionService
         var content = ToJson(orderInfo);
 
         var result = await _httpClient.PostAsync(
-            $"{_baseFunctionUrlConfiguration.BaseUrl}{_baseFunctionUrlConfiguration.DeliveryOrderProcessorFunction}?code={_baseFunctionUrlConfiguration.FunctionKey}", content);
+            $"{_baseFunctionUrlConfiguration.BaseUrl}{_baseFunctionUrlConfiguration.DeliveryOrderProcessorFunction}?code={_baseFunctionUrlConfiguration.DeliveryOrderProcessorFunctionKey}", content);
 
         return result.IsSuccessStatusCode;
     }

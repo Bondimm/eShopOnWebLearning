@@ -3,14 +3,14 @@ version: '3.4'
 services:
   eshopwebmvc:
     container_name: eshopwebmvc   
-    image: eshopcontainers2412.azurecr.io/eshopwebmvc
+    image: eshopregistry1501.azurecr.io/eshopwebmvc
     build:
       context: .
       dockerfile: src/Web/Dockerfile
       
   eshoppublicapi:
     container_name: eshoppublicapi 
-    image: eshopcontainers2412.azurecr.io/eshoppublicapi
+    image: eshopregistry1501.azurecr.io/eshoppublicapi
     build:
       context: .
       dockerfile: src/PublicApi/Dockerfile
